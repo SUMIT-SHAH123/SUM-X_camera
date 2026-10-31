@@ -430,10 +430,11 @@ $red[Description]${cyan} :[Camera Phishing tool]
 $red[Author]     ${cyan} :[SUM X]
 $red[Github]     ${cyan} :[https://github.com/SUMIT-SHAH123]
 $red[Join us]    ${cyan} :[https://sumithub.com]
+$red[Telegarm]   ${cyan} :[https://sumithub.com]"
 printf "${cyan}\nSUM${nc}@${cyan}-X ${red}$ ${nc}"
 read about
     elif echo $option | grep -q "m"; then
-        xdg-open "https://bit.ly/3PV3S3r"
+        xdg-open "https://sumithub.com"
     elif echo $option | grep -q "0"; then
         exit 0
     else
