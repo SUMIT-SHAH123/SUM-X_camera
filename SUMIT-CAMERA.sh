@@ -1,8 +1,3 @@
-
-
-
-# Colors
-
 #!/bin/bash
 
 # SUM X - Terminal Theme
@@ -26,19 +21,19 @@ cwd="$(pwd)"
 
 logo="
 ${green}╔══════════════════════════════════════════════════════════╗
-${green}║${cyan}                                                      ${green}║
-${green}║${cyan}   ███████╗██╗   ██╗███╗   ███╗    ██╗  ██╗           ${green}║
-${green}║${cyan}   ██╔════╝██║   ██║████╗ ████║    ╚██╗██╔╝           ${green}║
-${green}║${cyan}   ███████╗██║   ██║██╔████╔██║     ╚███╔╝            ${green}║
-${green}║${cyan}   ╚════██║██║   ██║██║╚██╔╝██║     ██╔██╗            ${green}║
-${green}║${cyan}   ███████║╚██████╔╝██║ ╚═╝ ██║    ██╔╝ ██╗           ${green}║
-${green}║${cyan}   ╚══════╝ ╚═════╝ ╚═╝     ╚═╝    ╚═╝  ╚═╝           ${green}║
-${green}║${white}                                                      ${green}║
-${green}║${white}                                                      ${green}║
-${green}║${yellow}              [ SYSTEM INITIALIZED ]                  ${green}║
-${green}║${yellow}             [  TERMINAL ACCESS: ON  ]                 ${green}║
+${green}║${cyan}                                                     ${green}║
+${green}║${cyan}   ███████╗██╗   ██╗███╗   ███╗    ██╗  ██╗          ${green}║
+${green}║${cyan}   ██╔════╝██║   ██║████╗ ████║    ╚██╗██╔╝          ${green}║
+${green}║${cyan}   ███████╗██║   ██║██╔████╔██║     ╚███╔╝           ${green}║
+${green}║${cyan}   ╚════██║██║   ██║██║╚██╔╝██║     ██╔██╗           ${green}║
+${green}║${cyan}   ███████║╚██████╔╝██║ ╚═╝ ██║    ██╔╝ ██╗          ${green}║
+${green}║${cyan}   ╚══════╝ ╚═════╝ ╚═╝     ╚═╝    ╚═╝  ╚═╝          ${green}║
+${green}║${white}                                                     ${green}║
+${green}║${white}                                                     ${green}║
+${green}║${yellow}              [ SYSTEM INITIALIZED ]                 ${green}║
+${green}║${yellow}             [  TERMINAL ACCESS: ON  ]                ${green}║
 ${green}║${yellow}              [ DEVELOPER: SUMIT ]                   ${green}║
-${green}║${white}                                                      ${green}║
+${green}║${white}                                                     ${green}║
 ${green}╚══════════════════════════════════════════════════════════╝
 ${reset}
 "
@@ -51,8 +46,9 @@ echo -e "${info} DEVELOPER  : SUMIT"
 echo -e "${info} DIRECTORY  : ${cwd}"
 echo -e "${success} STATUS     : ONLINE"
 echo -e "${info} VERSION    : 1.0"
-echo
-"
+echo ""
+
+# Package Installer
 
 # Package Installer
 pacin(){
